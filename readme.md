@@ -1,6 +1,6 @@
 ## Introduction
 I want to experiment with long short-term memory neural networks for text generation. My main motivation is to have a cool project to get comfortable with Keras while doing Andrew Ng's Deep Learning degree on coursera.
-Additional learnings I hope to achieve is deepening my git skills, bash skills, and using EC2 Instances on AWS.
+Additional learnings I hope to achieve are deepening my git skills, bash skills, and using EC2 Instances on AWS.
 
 ## Prerequisites
 I' ll start with this tutorial locally on my laptop. You can use the environment.yml file to create an anaconda environment that mimics my setup (tensorflow version, keras, ...). Note, however, that I created this environment on Windows. A linux system might need other dependencies. I had problems with this in the past and recommend setting up your conda environment from scratch if you use a Linux system.
