@@ -1,6 +1,7 @@
 ## Introduction
 I want to experiment with long short-term memory neural networks for text generation. My main motivation is to have a cool project to get comfortable with Keras while doing Andrew Ng's Deep Learning degree on coursera.
 Additional learnings I hope to achieve are deepening my git skills, bash skills, and using EC2 Instances on AWS.
+I'll write down my thoughts in a journey style while toying with the model.
 
 ## Prerequisites
 I' ll start with this tutorial locally on my laptop. You can use the environment.yml file to create an anaconda environment that mimics my setup (tensorflow version, keras, ...). Note, however, that I created this environment on Windows. A linux system might need other dependencies. I had problems with this in the past and recommend setting up your conda environment from scratch if you use a Linux system.
@@ -15,3 +16,8 @@ If you want to Deep Dive into LSTMs the following three are a good starting poin
  - http://karpathy.github.io/2015/05/21/rnn-effectiveness/
  - http://lxmls.it.pt/2014/socher-lxmls.pdf
  - https://www.youtube.com/playlist?list=PL3FW7Lu3i5Jsnh1rnUwq_TcylNr7EkRe6
+
+## Journey
+### Replicating the tutorial with the Alice in Wonderland Text - 29.Nov
+Using a CPU for this is not only non-practical but almost impossible. The writer of the Tutorial uses a Nvidia K520 GPU and trains an epoch in 300 seconds on my i7-6500U one epoch takes around 18 minutes.
+Hence, I have to move earlier to the cloud than I expected. I, nevertheless, let the model run for 4 epochs. 
