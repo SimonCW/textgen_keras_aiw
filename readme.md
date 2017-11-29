@@ -19,5 +19,8 @@ If you want to Deep Dive into LSTMs the following three are a good starting poin
 
 ## Journey
 ### Replicating the tutorial with the Alice in Wonderland Text - 29.Nov
-Using a CPU for this is not only non-practical but almost impossible. The writer of the Tutorial uses a Nvidia K520 GPU and trains an epoch in 300 seconds on my i7-6500U one epoch takes around 18 minutes.
+I commented the code more detailed than the author of the original tutorial to make sure I understand every line.
+Using a CPU for this is not only non-practical but almost impossible. The writer of the Tutorial uses a Nvidia K520 GPU and trains an epoch in 300 seconds on my i7-6500U one epoch takes around 70 minutes.
 Hence, I have to move earlier to the cloud than I expected. I, nevertheless, let the model run for 4 epochs. 
+
+On an aws p2.large instance one epoch takes only about 160 seconds. These [tips](https://machinelearningmastery.com/command-line-recipes-deep-learning-amazon-web-services/) were helpful working with ec2. However, I already have a basic understanding of aws ec2.
