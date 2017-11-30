@@ -24,3 +24,18 @@ Using a CPU for this is not only non-practical but almost impossible. The writer
 Hence, I have to move earlier to the cloud than I expected. I, nevertheless, let the model run for 4 epochs. 
 
 On an aws p2.large instance one epoch takes only about 160 seconds. These [tips](https://machinelearningmastery.com/command-line-recipes-deep-learning-amazon-web-services/) were helpful working with ec2. However, I already have a basic understanding of aws ec2.
+I'm using the pre-configured Deep Learning AMI (basically a VM Image) with almost everything configured to start training on the GPU right away. The ami I use has this id ami-999844e0 in the eu-west-1 region (Ireland).
+Unfortunately, something went wrong with training the model. I'll check the log file and test my code locally with a very small text input.
+
+### Training on AWS GPU Instance - 30. Nov
+My **workflow with the EC2** instance is roughly the following: 
+ - Create an EBS Volume and attach it to your ec2 instance, e.g. `sudo mount /dev/xvdf /mnt/ebs`. Then make it accessible `sudo chmod -R 777 /mnt/ebs`.
+ - Upload the python scripts and input files with secure copy, e.g. `scp -i ~/.ssh/*your-keypair*.pem *your-script*.py ec2-user@*public-ip*:~/`
+ - Install h5py to be able to save the network weights as hdf5: sudo pip3 install h5py 
+ - Run the script as background process while writing logs: nohup python3 /mnt/ebs/simple_lstm_aiw.py >/mnt/ebs/script.py.log </dev/null 2>&1 &
+ - Watch the log file (also to keep your terminal busy and avoid timeout): `watch "tail script.py.log"` or watch the GPU utilization: `watch "nvidia-smi"`
+ - Wait and terminate the instance after training. The model weights, tensorboard files and logs will be in the ebs file we attached in the beginning
+ - For accessing the **tensorboard** created during training use `tensorboard --logdir=/path_to_your_logs`
+
+I'll look into this example of word-level predictions next:
+https://towardsdatascience.com/lstm-by-example-using-tensorflow-feb0c1968537

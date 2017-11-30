@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[ ]:
+# In[6]:
 
 
 import numpy as np
@@ -16,7 +16,7 @@ import sys
 
 # Import ASCII text of the books "Alice in Wonderland" (downloaded from project Gutenberg) and convert all characters to lowercase so that the model does not treat capitalized words as new words.
 
-# In[ ]:
+# In[7]:
 
 
 # load text and convert to lowercase
@@ -25,9 +25,18 @@ raw_text = open(filename).read()
 raw_text = raw_text.lower()
 
 
+# For local testing, I decrease the text size dramatically to the first 1000 characters.
+
+# In[8]:
+
+
+# decrease input text size drastically for local testing
+#raw_text = raw_text[0:1000]
+
+
 # So that the Neural Network can use the input, each unique character is mapped to an integer value.
 
-# In[ ]:
+# In[9]:
 
 
 # create mapping of unique charst to integers
@@ -37,7 +46,7 @@ char_to_int = dict((c,i) for i, c in enumerate(chars))
 
 # Summary Statistics of the data set
 
-# In[ ]:
+# In[10]:
 
 
 n_chars = len(raw_text)
@@ -52,7 +61,7 @@ print("Total distinct characters: ", str(n_vocab))
 # 
 # The characters get converted to integers using the lookup dictionary created before.
 
-# In[ ]:
+# In[11]:
 
 
 # Prepare dataset
@@ -74,7 +83,7 @@ print("Total # of Patterns: " + str(n_patterns))
 # 2. Rescale the integers to the range 0-1 to better train the network if a sigmoid function is used (stay in approx linear part of the sigmoid). 
 # 3. One-hot encode trainY so that each character in y is represented by a vector of 45 (number of distinct characters) values. The character "n" (inter value 32) is then represented by a vector of zeros except for one "1" in column 32.
 
-# In[ ]:
+# In[12]:
 
 
 # reshape X to [samples, time steps, features]
@@ -87,7 +96,7 @@ y = np_utils.to_categorical(trainY)
 
 # I define a LSTM model with two hidden layers and 256 memory units. Dropout is used with a probability of 20%. The output layer is a Dense layer using the softmax activation function. This outputs a probability prediction for each character. These are the parameters used in the tutorial. They are not very well tuned but merely a starting point.
 
-# In[ ]:
+# In[13]:
 
 
 model = Sequential()
@@ -101,27 +110,18 @@ model.compile(loss = "categorical_crossentropy", optimizer = "adam")
 
 # Next, I save the model weights after each epoch so that I can use the weights that produced the model with the lowest error for prediction afterwards. I also save the tensorboard callbacks to be able to see 
 
-# In[ ]:
+# In[14]:
 
 
 # define checkpoints
-filepath = "./output/weights-improvement-{epoch:02d}-{loss:.4f}.hdf5"
+filepath = "./checkpoints/weights-improvement-{epoch:02d}-{loss:.4f}.hdf5"
 checkpoint = ModelCheckpoint(filepath, monitor = "loss", verbose = 1, save_best_only = True, mode = "min")
 tensorboard_cb = TensorBoard(log_dir='./logs', histogram_freq=0, batch_size=32, write_graph=True, write_grads=False, write_images=False, embeddings_freq=0, embeddings_layer_names=None, embeddings_metadata=None)
 callbacks_list = [checkpoint, tensorboard_cb]
 
 
-# In[ ]:
+# In[15]:
 
 
 model.fit(X, y, epochs = 60, batch_size = 64, callbacks = callbacks_list)
-
-
-# In[ ]:
-
-
-# load weights
-filename = ""
-model.load_weights(filename)
-model.compile(loss = "categorical_crossentropy", optimizer = "adam")
 
